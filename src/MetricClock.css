@@ -1,0 +1,39 @@
+body {
+  background-color: white;
+  color: black;
+  font-family: 'Comic Neue', sans-serif;
+}
+
+.metric-clock {
+  text-align: center;
+  padding: 20px;
+}
+
+.digital-clock {
+  font-family: 'Comic Neue', sans-serif;
+  font-size: 80px;
+  color: #FF0000;
+  text-align: center;
+}
+
+.explanation p {
+  margin: 0;
+  margin-top: 20px; /* Add some space above the "Metric Time:" heading */
+}
+
+.explanation ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: left;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.explanation {
+  text-align: center;
+}
+
+.timezone-selector {
+  margin-top: 20px;
+  text-align: center;
+}
