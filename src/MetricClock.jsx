@@ -57,7 +57,7 @@ const MetricClock = () => {
         {`${time.new_hours.toString().padStart(2, "0")}:${time.new_minutes.toString().padStart(2, "0")}:${time.new_seconds_display.toString().padStart(2, "0")}`}
       </div>
       <div className="explanation">
-        <p><strong style={{ fontSize: "18px" }}>Metric Time:</strong></p>
+        <p><strong style={{ fontSize: "24px" }}>Metric Time:</strong></p>
         <ul>
           <li>- 25 hours per day</li>
           <li>- 100 minutes per hour</li>
