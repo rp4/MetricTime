@@ -1,12 +1,11 @@
-/**
- * This script adds a "DAD YEARS" badge to your page
- */
+(function replitBadge() {
+  // Fetch the script element that includes this script
+  const scriptElement = document.currentScript;
 
-(function replitBadge(
-  theme = "dark",
-  position = "bottom-left",
-  caption = null,
-) {
+  // Get attributes from the script tag
+  const theme = scriptElement.getAttribute("theme") || "dark";
+  const position = scriptElement.getAttribute("position") || "bottom-left";
+
   // Load Baloo font from Google Fonts
   const fontLink = document.createElement("link");
   fontLink.href = "https://fonts.googleapis.com/css2?family=Baloo&display=swap";
@@ -82,8 +81,4 @@
   // Append badge to page
   badgeAnchor.appendChild(badgeText);
   document.body.appendChild(badgeAnchor);
-})(
-  document.currentScript.getAttribute("theme"),
-  document.currentScript.getAttribute("position"),
-  document.currentScript.getAttribute("caption"),
-);
+})();
