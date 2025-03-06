@@ -1,43 +1,236 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2&family=Varela+Round&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap');
+
+:root {
+  --primary-color: #00ffaa;
+  --primary-glow: rgba(0, 255, 170, 0.7);
+  --bg-color: #121212;
+  --container-bg: linear-gradient(145deg, #1a1a1a, #2d2d2d);
+  --text-color: #f5f5f5;
+  --font-size-base: clamp(16px, 2vw, 18px);
+  --clock-font-size: clamp(2.2rem, 5vw, 3rem);
+  --heading-font-size: clamp(1.2rem, 4vw, 1.5rem);
+  --body-font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  --spacing-base: clamp(0.75rem, 2vw, 1.5rem);
+}
 
 body {
-  background-color: #FCFCFC;
-  color: #333333;
-  font-family: 'Varela Round', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-base);
 }
 
 .metric-clock {
-  text-align: center;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-base);
+  max-width: min(90vw, 600px);
+  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+.clock-container {
+  background: var(--container-bg);
+  border-radius: clamp(10px, 3vw, 20px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  padding: var(--spacing-base);
+  width: 100%;
+  margin-bottom: var(--spacing-base);
+  overflow-x: hidden;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
 }
 
 .digital-clock {
-  font-family: 'Varela Round', sans-serif;
-  font-size: 80px;
-  color: #FF0000;
+  font-family: 'Orbitron', sans-serif;
+  font-size: var(--clock-font-size);
+  font-weight: 700;
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-glow);
   text-align: center;
+  letter-spacing: 0.05em;
+  margin: 0;
+  padding: calc(var(--spacing-base) * 0.5) 0;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: clamp(0.2rem, 1vw, 0.5rem);
+  white-space: nowrap;
+}
+
+.time-unit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.time-unit {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: clamp(5px, 1.5vw, 10px);
+  padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.4rem, 1.2vw, 0.7rem);
+  margin: 0;
+  min-width: 2ch;
+  flex-shrink: 0;
+}
+
+.time-label {
+  font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+  font-weight: 400;
+  color: rgba(245, 245, 245, 0.7);
+  margin-top: clamp(0.2rem, 0.5vw, 0.3rem);
+  text-shadow: none;
+  letter-spacing: 0.05em;
+}
+
+.time-separator {
+  display: inline-flex;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+  margin: 0 clamp(0.05rem, 0.3vw, 0.1rem);
+  font-size: 0.9em;
+  align-self: flex-start;
+  margin-top: clamp(0.3rem, 1vw, 0.5rem);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.explanation {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: clamp(8px, 2vw, 15px);
+  padding: var(--spacing-base);
+  margin: var(--spacing-base) 0;
+  width: 100%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .explanation p {
   margin: 0;
-  margin-top: 20px; /* Add some space above the "Metric Time:" heading */
+  margin-bottom: calc(var(--spacing-base) * 0.75);
+  font-size: var(--heading-font-size);
+  font-weight: 500;
+  color: var(--primary-color);
 }
 
 .explanation ul {
   list-style-type: none;
   padding: 0;
-  text-align: left;
-  display: inline-block;
-  margin-top: 10px;
-  font-size: 20px;
+  margin: 0;
+  font-size: var(--body-font-size);
+  color: var(--text-color);
 }
 
-.explanation {
-  text-align: center;
+.explanation li {
+  margin: calc(var(--spacing-base) * 0.3) 0;
+  display: flex;
+  align-items: center;
+}
+
+.explanation li::before {
+  content: "•";
+  color: var(--primary-color);
+  font-size: calc(var(--body-font-size) * 1.3);
+  margin-right: calc(var(--spacing-base) * 0.3);
 }
 
 .timezone-selector {
-  margin-top: 20px;
+  margin-top: var(--spacing-base);
+  width: 100%;
   text-align: center;
-  font-size: 20px;
 }
+
+.timezone-selector label {
+  display: block;
+  margin-bottom: calc(var(--spacing-base) * 0.3);
+  font-size: var(--body-font-size);
+  color: var(--text-color);
+}
+
+.timezone-selector select {
+  width: 100%;
+  padding: calc(var(--spacing-base) * 0.5) var(--spacing-base);
+  border-radius: clamp(5px, 1.5vw, 10px);
+  background-color: #2d2d2d;
+  color: var(--text-color);
+  border: 1px solid #444;
+  font-size: var(--body-font-size);
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.timezone-selector select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0, 255, 170, 0.2);
+}
+
+.timezone-selector select option {
+  padding: calc(var(--spacing-base) * 0.2);
+  background-color: #2d2d2d;
+}
+
+/* Larger screens */
+@media (min-width: 1200px) {
+  :root {
+    --clock-font-size: 3rem;
+    --heading-font-size: 1.8rem;
+    --body-font-size: 1.2rem;
+    --spacing-base: 2rem;
+  }
+  
+  .digital-clock {
+    padding: 1rem 2rem;
+  }
+}
+
+/* Medium screens */
+@media (max-width: 768px) {
+  .metric-clock {
+    padding: calc(var(--spacing-base) * 0.75);
+  }
+  
+  .clock-container {
+    padding: calc(var(--spacing-base) * 0.75);
+  }
+  
+  .digital-clock {
+    gap: 0.3rem;
+  }
+}
+
+/* Small screens */
+@media (max-width: 480px) {
+  :root {
+    --clock-font-size: 2.2rem;
+  }
+  
+  .metric-clock {
+    padding: calc(var(--spacing-base) * 0.5);
+  }
+  
+  .clock-container {
+    padding: calc(var(--spacing-base) * 0.5);
+  }
+  
+  .time-unit {
+    padding: 0.2rem 0.4rem;
+  }
+  
+  .digital-clock {
+    gap: 0.2rem;
+  }
+}
+

@@ -8,14 +8,15 @@ const getMetricTime = (tz) => {
   const hours = now.hour();
   const minutes = now.minute();
   const seconds = now.second();
+  const milliseconds = now.millisecond();
 
   const NEW_HOURS_PER_DAY = 25;
   const NEW_MINUTES_PER_HOUR = 100;
   const NEW_SECONDS_PER_MINUTE = 100;
   const SECONDS_PER_DAY = 24 * 60 * 60;
 
-  // Calculate total traditional seconds
-  const total_seconds = hours * 3600 + minutes * 60 + seconds;
+  // Calculate total traditional seconds (including milliseconds for precision)
+  const total_seconds = hours * 3600 + minutes * 60 + seconds + (milliseconds / 1000);
 
   // Conversion rate between traditional seconds and new seconds
   const conversion_rate =
@@ -40,32 +41,62 @@ const MetricClock = () => {
   const timezoneList = moment.tz.names();
 
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    // Use requestAnimationFrame for smoother updates
+    let animationFrameId;
+    
+    const updateClock = () => {
       setTime(getMetricTime(timezone));
-    }, 1000);
-
-    return () => clearInterval(intervalId);
+      animationFrameId = requestAnimationFrame(updateClock);
+    };
+    
+    animationFrameId = requestAnimationFrame(updateClock);
+    
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
   }, [timezone]);
 
   const handleTimezoneChange = (event) => {
     setTimezone(event.target.value);
   };
 
+  // Format time units with leading zeros
+  const formatTimeUnit = (unit) => {
+    return unit.toString().padStart(2, "0");
+  };
+
   return (
     <div className="metric-clock">
-      <div className="digital-clock">
-        {`${time.new_hours.toString().padStart(2, "0")}:${time.new_minutes.toString().padStart(2, "0")}:${time.new_seconds_display.toString().padStart(2, "0")}`}
+      <div className="clock-container">
+        <div className="digital-clock">
+          <div className="time-unit-container">
+            <span className="time-unit">{formatTimeUnit(time.new_hours)}</span>
+            <span className="time-label">HR</span>
+          </div>
+          <span className="time-separator">:</span>
+          <div className="time-unit-container">
+            <span className="time-unit">{formatTimeUnit(time.new_minutes)}</span>
+            <span className="time-label">MIN</span>
+          </div>
+          <span className="time-separator">:</span>
+          <div className="time-unit-container">
+            <span className="time-unit">{formatTimeUnit(time.new_seconds_display)}</span>
+            <span className="time-label">SEC</span>
+          </div>
+        </div>
       </div>
+      
       <div className="explanation">
-        <p><strong style={{ fontSize: "24px" }}>Metric Time:</strong></p>
+        <p>Metric Time</p>
         <ul>
-          <li>- 25 hours per day</li>
-          <li>- 100 minutes per hour</li>
-          <li>- 100 seconds per minute</li>
+          <li>25 hours per day</li>
+          <li>100 minutes per hour</li>
+          <li>100 seconds per minute</li>
         </ul>
       </div>
+      
       <div className="timezone-selector">
-        <label htmlFor="timezone-select">Select Timezone: </label>
+        <label htmlFor="timezone-select">Select Timezone</label>
         <select id="timezone-select" value={timezone} onChange={handleTimezoneChange}>
           {timezoneList.map((tz) => (
             <option key={tz} value={tz}>
